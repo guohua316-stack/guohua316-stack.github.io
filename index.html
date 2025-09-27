@@ -1,36 +1,1635 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <title>Hello World - GH Test</title>
-  <style>
-    .banner-section {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .banner-img {
-      max-width: 45vw;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    h1 {
-      text-align: center;
-    }
-    p {
-      text-align: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GH's Online Gallery of Paintings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Crimson+Text:wght@400;600&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #8B7355;
+            --secondary-color: #D4C0A1;
+            --accent-color: #A52A2A;
+            --text-dark: #3A3A3A;
+            --text-light: #5C5C5C;
+            --bg-light: #F9F7F4;
+            --bg-white: #FFFFFF;
+            --border-color: #E5E5E5;
+        }
+        
+        body {
+            font-family: 'Crimson Text', serif;
+            color: var(--text-dark);
+            line-height: 1.7;
+            background-color: var(--bg-light);
+            padding-bottom: 2rem;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        /* 头部样式 */
+        header {
+            background-color: var(--bg-white);
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin: 0;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--accent-color);
+            font-style: italic;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            font-style: italic;
+            font-family: 'Crimson Text', serif;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
+            z-index: 1;
+        }
+        
+        .hero-edit-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--text-dark);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            z-index: 3;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .hero-edit-btn:hover {
+            background: white;
+        }
+        
+        .intro-text {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            text-align: center;
+            padding: 0 2rem;
+            line-height: 1.8;
+        }
+        
+        /* 画廊区域 */
+        .gallery-section {
+            padding: 0 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-header h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .upload-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .upload-btn:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .year-filter {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .year-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-light);
+            font-weight: 600;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        
+        .year-btn:hover, .year-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .painting-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        
+        .painting-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .painting-img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .painting-card:hover .painting-img {
+            transform: scale(1.03);
+        }
+        
+        .painting-info {
+            padding: 1.8rem;
+        }
+        
+        .painting-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+        
+        .painting-year {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            font-family: 'Source Sans Pro', sans-serif;
+        }
+        
+        .painting-desc {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .painting-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .action-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            color: var(--text-light);
+        }
+        
+        .action-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .year-divider {
+            text-align: center;
+            margin: 4rem 0 2rem;
+            position: relative;
+        }
+        
+        .year-divider h3 {
+            display: inline-block;
+            background-color: var(--bg-light);
+            padding: 0 2rem;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .year-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: var(--border-color);
+            z-index: 0;
+        }
+        
+        /* 上传面板 */
+        .upload-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .upload-panel.active {
+            display: flex;
+        }
+        
+        .upload-form {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .form-header h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            border: 1px dashed var(--border-color);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .edit-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .edit-btn {
+            background-color: var(--secondary-color);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: var(--text-dark);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* About页面样式 */
+        .about-section {
+            display: none;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .about-section.active {
+            display: block;
+        }
+        
+        .artist-profile {
+            display: flex;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            align-items: center;
+            position: relative;
+        }
+        
+        .artist-image {
+            flex: 0 0 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .artist-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .artist-info {
+            flex: 1;
+        }
+        
+        .artist-info h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .artist-info p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+        
+        .artist-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+        
+        .artist-statement {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 3rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .artist-statement h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        /* 编辑按钮 */
+        .edit-profile-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.8);
+            color: var(--text-dark);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .edit-profile-btn:hover {
+            background: white;
+        }
+        
+        /* 横幅编辑面板 */
+        .banner-edit-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .banner-edit-panel.active {
+            display: flex;
+        }
+        
+        .banner-edit-form {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 2rem;
+            }
+            
+            .gallery-section {
+                padding: 0 1.5rem;
+            }
+            
+            .year-filter {
+                gap: 0.5rem;
+            }
+            
+            .year-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .artist-profile {
+                flex-direction: column;
+            }
+            
+            .artist-image {
+                flex: none;
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .artist-stats {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .year-filter {
+                gap: 0.3rem;
+            }
+            
+            .year-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .upload-form, .profile-edit-form, .banner-edit-form {
+                padding: 1.5rem;
+            }
+        }
+        
+        /* 动画效果 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .painting-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .page-section {
+            animation: fadeInUp 0.5s ease-out;
+        }
+        
+        /* 空状态提示 */
+        .empty-gallery {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-light);
+        }
+        
+        .empty-gallery i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+        
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
 </head>
 <body>
-  <div class="banner-section">
-    <img src="https://raw.githubusercontent.com/guohua316-stack/guohua316.github.io/main/banner1.jpg" alt="Banner 1" class="banner-img">
-    <img src="https://raw.githubusercontent.com/guohua316-stack/guohua316.github.io/main/banner2.jpg" alt="Banner 2" class="banner-img">
-  </div>
-  <h1>Hello World!</h1>
-  <p>If you see this page, your GitHub Pages deployment works!</p>
+    <!-- 头部 -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo" id="homeLink">
+                <h1>GH's <span>Online Gallery</span></h1>
+            </a>
+            <div class="nav-links">
+                <a href="#" class="active" id="galleryLink">Gallery</a>
+                <a href="#" id="aboutLink">About</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 画廊页面 -->
+    <div class="page-section active" id="galleryPage">
+        <!-- 英雄区域 -->
+        <section class="hero" id="heroBanner">
+            <button class="hero-edit-btn" id="editBannerBtn">
+                <i class="fas fa-edit"></i> 编辑横幅
+            </button>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h2 id="bannerTitle">Welcome to GH's online gallery of paintings.</h2>
+                <p id="bannerSubtitle">She stepped lightly. Touched hearts. Still in the timeliness.</p>
+            </div>
+        </section>
+        
+        <p class="intro-text">这里展示了我多年来的创作。每一幅作品都承载着独特的情感和故事，希望通过这个平台与您分享艺术的美好。</p>
+
+        <!-- 画廊区域 -->
+        <section class="gallery-section" id="gallery">
+            <div class="section-header">
+                <h2>作品收藏</h2>
+                <button class="upload-btn" id="openUpload">
+                    <i class="fas fa-plus"></i> 上传新作品
+                </button>
+            </div>
+            
+            <div class="year-filter">
+                <button class="year-btn active" data-year="all">全部作品</button>
+                <button class="year-btn" data-year="2025">2025</button>
+                <button class="year-btn" data-year="2024">2024</button>
+                <button class="year-btn" data-year="2023">2023</button>
+                <button class="year-btn" data-year="2022">2022</button>
+                <button class="year-btn" data-year="2021">2021</button>
+                <button class="year-btn" data-year="2020">2020</button>
+                <button class="year-btn" data-year="2019">2019</button>
+                <button class="year-btn" data-year="2018">2018</button>
+                <button class="year-btn" data-year="2017">2017</button>
+                <button class="year-btn" data-year="2016">2016</button>
+                <button class="year-btn" data-year="2015">2015</button>
+            </div>
+            
+            <!-- 作品展示区域 -->
+            <div id="paintingsContainer">
+                <!-- 作品将动态加载到这里 -->
+            </div>
+        </section>
+    </div>
+
+    <!-- About页面 -->
+    <div class="about-section" id="aboutPage">
+        <section class="gallery-section">
+            <div class="section-header">
+                <h2>About the Artist</h2>
+            </div>
+            
+            <div class="artist-profile">
+                <button class="edit-profile-btn" id="editProfileBtn">
+                    <i class="fas fa-edit"></i> 编辑资料
+                </button>
+                <div class="artist-image">
+                    <img id="artistPortrait" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Artist Portrait">
+                </div>
+                <div class="artist-info">
+                    <h2 id="artistName">GH</h2>
+                    <p id="artistBio">一位专注于创作的艺术家，她的作品以细腻的笔触和丰富的色彩著称，擅长捕捉自然风光和日常生活中的美好瞬间。艺术是情感的表达，每一幅作品都是内心世界的映射。</p>
+                </div>
+            </div>
+            
+            <div class="artist-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="totalPaintings">0</div>
+                    <div class="stat-label">作品数量</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="artistYears">10+</div>
+                    <div class="stat-label">创作年限</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="artistExhibitions">1+</div>
+                    <div class="stat-label">展览经历</div>
+                </div>
+            </div>
+            
+            <div class="artist-statement">
+                <h3>艺术宣言</h3>
+                <p id="artistStatement">"艺术是我与这个世界对话的方式。每一幅画作都是情感的延伸，是对生活、自然和人类情感的独特诠释。我希望通过我的作品，能够触动观者的心灵，唤起他们对美的感知和共鸣。"</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- 上传面板 -->
+    <div class="upload-panel" id="uploadPanel">
+        <div class="upload-form">
+            <div class="form-header">
+                <h3>上传新作品</h3>
+                <button class="close-btn" id="closeUpload">&times;</button>
+            </div>
+            
+            <form id="paintingForm">
+                <div class="form-group">
+                    <label class="form-label" for="paintingTitle">作品标题</label>
+                    <input type="text" id="paintingTitle" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="paintingYear">创作年份</label>
+                    <select id="paintingYear" class="form-input" required>
+                        <option value="">选择年份</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
+                        <option value="2018">2018</option>
+                        <option value="2017">2017</option>
+                        <option value="2016">2016</option>
+                        <option value="2015">2015</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="paintingImage">作品图片</label>
+                    <input type="file" id="paintingImage" class="form-input" accept="image/*" required>
+                    
+                    <div class="image-preview" id="imagePreview">
+                        <span>图片预览</span>
+                    </div>
+                    
+                    <div class="edit-controls">
+                        <button type="button" class="edit-btn" id="rotateBtn">旋转图片</button>
+                        <button type="button" class="edit-btn" id="brightnessBtn">调整亮度</button>
+                        <button type="button" class="edit-btn" id="contrastBtn">调整对比度</button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="paintingDesc">作品描述</label>
+                    <textarea id="paintingDesc" class="form-textarea" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="paintingSize">作品尺寸</label>
+                    <input type="text" id="paintingSize" class="form-input" placeholder="例如: 80 × 60 cm" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="paintingMaterial">创作材质</label>
+                    <input type="text" id="paintingMaterial" class="form-input" placeholder="例如: 布面油画" required>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelUpload">取消</button>
+                    <button type="submit" class="btn btn-primary">上传作品</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 横幅编辑面板 -->
+    <div class="banner-edit-panel" id="bannerEditPanel">
+        <div class="banner-edit-form">
+            <div class="form-header">
+                <h3>编辑横幅</h3>
+                <button class="close-btn" id="closeBannerEdit">&times;</button>
+            </div>
+            
+            <form id="bannerForm">
+                <div class="form-group">
+                    <label class="form-label" for="bannerImage">横幅图片</label>
+                    <input type="file" id="bannerImage" class="form-input" accept="image/*">
+                    
+                    <div class="image-preview" id="bannerImagePreview">
+                        <span>图片预览</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="bannerTitle">横幅标题</label>
+                    <input type="text" id="bannerTitleInput" class="form-input">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="bannerSubtitle">横幅副标题</label>
+                    <input type="text" id="bannerSubtitleInput" class="form-input">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBannerEdit">取消</button>
+                    <button type="submit" class="btn btn-primary">保存更改</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 艺术家资料编辑面板 -->
+    <div class="upload-panel" id="profileEditPanel">
+        <div class="upload-form">
+            <div class="form-header">
+                <h3>编辑艺术家资料</h3>
+                <button class="close-btn" id="closeProfileEdit">&times;</button>
+            </div>
+            
+            <form id="profileForm">
+                <div class="form-group">
+                    <label class="form-label" for="artistImage">艺术家头像</label>
+                    <input type="file" id="artistImage" class="form-input" accept="image/*">
+                    
+                    <div class="image-preview" id="artistImagePreview">
+                        <span>图片预览</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="artistNameInput">艺术家姓名</label>
+                    <input type="text" id="artistNameInput" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="artistBio">艺术家简介</label>
+                    <textarea id="artistBioInput" class="form-textarea" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="artistYears">创作年限</label>
+                    <input type="text" id="artistYearsInput" class="form-input" placeholder="例如: 10+" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="artistExhibitions">展览经历</label>
+                    <input type="text" id="artistExhibitionsInput" class="form-input" placeholder="例如: 1+" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="artistStatement">艺术宣言</label>
+                    <textarea id="artistStatementInput" class="form-textarea" required></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelProfileEdit">取消</button>
+                    <button type="submit" class="btn btn-primary">保存更改</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>GH's Online Gallery &copy; 2023 - 所有作品版权归艺术家所有</p>
+    </footer>
+
+    <script>
+        // 作品数据管理
+        let paintings = [];
+        
+        // 艺术家资料数据
+        let artistProfile = {
+            name: "GH",
+            bio: "一位专注于创作的艺术家，她的作品以细腻的笔触和丰富的色彩著称，擅长捕捉自然风光和日常生活中的美好瞬间。艺术是情感的表达，每一幅作品都是内心世界的映射。",
+            portrait: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+            years: "10+",
+            exhibitions: "1+",
+            statement: "\"艺术是我与这个世界对话的方式。每一幅画作都是情感的延伸，是对生活、自然和人类情感的独特诠释。我希望通过我的作品，能够触动观者的心灵，唤起他们对美的感知和共鸣。\""
+        };
+        
+        // 横幅数据
+        let bannerData = {
+            image: "https://images.unsplash.com/photo-1579546929662-711aa81148cf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80",
+            title: "Welcome to GH's online gallery of paintings.",
+            subtitle: "She stepped lightly. Touched hearts. Still in the timeliness."
+        };
+        
+        // 初始化作品数据
+        function initializePaintings() {
+            // 尝试从本地存储加载作品
+            const savedPaintings = localStorage.getItem('ghPaintings');
+            if (savedPaintings) {
+                paintings = JSON.parse(savedPaintings);
+            } else {
+                // 如果没有保存的作品，使用默认示例
+                paintings = [
+                    {
+                        id: 1,
+                        title: "晨曦湖畔",
+                        year: "2022",
+                        image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        description: "这幅作品描绘了清晨湖边的宁静景色，阳光透过薄雾洒在湖面上，营造出一种梦幻般的氛围。",
+                        details: [
+                            { label: "尺寸", value: "80 × 60 cm" },
+                            { label: "材质", value: "布面油画" },
+                            { label: "创作地点", value: "杭州" }
+                        ]
+                    },
+                    {
+                        id: 2,
+                        title: "秋日森林",
+                        year: "2021",
+                        image: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        description: "秋天的森林色彩斑斓，金黄的树叶与深绿的松树形成鲜明对比，展现了季节交替的美感。",
+                        details: [
+                            { label: "尺寸", value: "100 × 80 cm" },
+                            { label: "材质", value: "布面油画" },
+                            { label: "创作地点", value: "北京" }
+                        ]
+                    },
+                    {
+                        id: 3,
+                        title: "静物与花瓶",
+                        year: "2023",
+                        image: "https://images.unsplash.com/photo-1578301978966-3d2d41c8abf4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        description: "这幅静物画通过细腻的笔触和丰富的色彩，展现了日常物品的美感与生命力。",
+                        details: [
+                            { label: "尺寸", value: "60 × 50 cm" },
+                            { label: "材质", value: "布面油画" },
+                            { label: "创作地点", value: "上海" }
+                        ]
+                    },
+                    {
+                        id: 4,
+                        title: "山间小屋",
+                        year: "2020",
+                        image: "https://images.unsplash.com/photo-1578301978016-17c67bcdc84f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        description: "隐藏在群山之间的小屋，与自然和谐共存，展现了人与自然的亲密关系。",
+                        details: [
+                            { label: "尺寸", value: "90 × 70 cm" },
+                            { label: "材质", value: "布面油画" },
+                            { label: "创作地点", value: "云南" }
+                        ]
+                    }
+                ];
+                savePaintings();
+            }
+            
+            renderPaintings();
+            updateStats();
+        }
+        
+        // 保存作品到本地存储
+        function savePaintings() {
+            localStorage.setItem('ghPaintings', JSON.stringify(paintings));
+        }
+        
+        // 加载艺术家资料
+        function loadArtistProfile() {
+            const savedProfile = localStorage.getItem('ghArtistProfile');
+            if (savedProfile) {
+                artistProfile = JSON.parse(savedProfile);
+            }
+            updateArtistProfile();
+        }
+        
+        // 保存艺术家资料
+        function saveArtistProfile() {
+            localStorage.setItem('ghArtistProfile', JSON.stringify(artistProfile));
+        }
+        
+        // 加载横幅数据
+        function loadBannerData() {
+            const savedBanner = localStorage.getItem('ghBannerData');
+            if (savedBanner) {
+                bannerData = JSON.parse(savedBanner);
+            }
+            updateBanner();
+        }
+        
+        // 保存横幅数据
+        function saveBannerData() {
+            localStorage.setItem('ghBannerData', JSON.stringify(bannerData));
+        }
+        
+        // 更新艺术家资料显示
+        function updateArtistProfile() {
+            document.getElementById('artistName').textContent = artistProfile.name;
+            document.getElementById('artistBio').textContent = artistProfile.bio;
+            document.getElementById('artistPortrait').src = artistProfile.portrait;
+            document.getElementById('artistYears').textContent = artistProfile.years;
+            document.getElementById('artistExhibitions').textContent = artistProfile.exhibitions;
+            document.getElementById('artistStatement').textContent = artistProfile.statement;
+        }
+        
+        // 更新横幅显示
+        function updateBanner() {
+            const hero = document.getElementById('heroBanner');
+            hero.style.backgroundImage = `url(${bannerData.image})`;
+            document.getElementById('bannerTitle').textContent = bannerData.title;
+            document.getElementById('bannerSubtitle').textContent = bannerData.subtitle;
+        }
+        
+        // 渲染作品到页面
+        function renderPaintings(filterYear = 'all') {
+            const container = document.getElementById('paintingsContainer');
+            container.innerHTML = '';
+            
+            // 筛选作品
+            let filteredPaintings = paintings;
+            if (filterYear !== 'all') {
+                filteredPaintings = paintings.filter(p => p.year === filterYear);
+            }
+            
+            // 按年份分组
+            const years = [...new Set(filteredPaintings.map(p => p.year))].sort((a, b) => b - a);
+            
+            if (filteredPaintings.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-gallery">
+                        <i class="fas fa-palette"></i>
+                        <h3>暂无作品</h3>
+                        <p>请上传您的第一幅作品，开始构建您的在线画廊。</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            years.forEach(year => {
+                // 添加年份分隔符
+                const yearDivider = document.createElement('div');
+                yearDivider.className = 'year-divider';
+                yearDivider.innerHTML = `<h3>${year}</h3>`;
+                container.appendChild(yearDivider);
+                
+                // 创建该年份的作品容器
+                const yearGallery = document.createElement('div');
+                yearGallery.className = 'gallery';
+                
+                // 添加该年份的作品
+                const yearPaintings = filteredPaintings.filter(p => p.year === year);
+                yearPaintings.forEach(painting => {
+                    const card = document.createElement('div');
+                    card.className = 'painting-card';
+                    card.innerHTML = `
+                        <img src="${painting.image}" alt="${painting.title}" class="painting-img">
+                        <div class="painting-info">
+                            <h3 class="painting-title">${painting.title}</h3>
+                            <p class="painting-year">${painting.year}年创作</p>
+                            <p class="painting-desc">${painting.description}</p>
+                            <div class="painting-actions">
+                                <button class="action-btn edit-painting" data-id="${painting.id}"><i class="fas fa-edit"></i> 编辑</button>
+                                <button class="action-btn delete-painting" data-id="${painting.id}"><i class="fas fa-trash"></i> 删除</button>
+                            </div>
+                        </div>
+                    `;
+                    yearGallery.appendChild(card);
+                });
+                
+                container.appendChild(yearGallery);
+            });
+            
+            // 添加编辑和删除事件监听
+            document.querySelectorAll('.edit-painting').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    editPainting(id);
+                });
+            });
+            
+            document.querySelectorAll('.delete-painting').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    deletePainting(id);
+                });
+            });
+        }
+        
+        // 更新统计信息
+        function updateStats() {
+            document.getElementById('totalPaintings').textContent = paintings.length;
+        }
+        
+        // 编辑作品
+        function editPainting(id) {
+            const painting = paintings.find(p => p.id === id);
+            if (!painting) return;
+            
+            // 填充表单数据
+            document.getElementById('paintingTitle').value = painting.title;
+            document.getElementById('paintingYear').value = painting.year;
+            document.getElementById('paintingDesc').value = painting.description;
+            document.getElementById('paintingSize').value = painting.details.find(d => d.label === '尺寸').value;
+            document.getElementById('paintingMaterial').value = painting.details.find(d => d.label === '材质').value;
+            
+            // 显示图片预览
+            const imagePreview = document.getElementById('imagePreview');
+            imagePreview.innerHTML = `<img src="${painting.image}" alt="预览">`;
+            
+            // 打开上传面板
+            document.getElementById('uploadPanel').classList.add('active');
+            
+            // 修改表单提交行为为编辑模式
+            const form = document.getElementById('paintingForm');
+            form.onsubmit = function(e) {
+                e.preventDefault();
+                
+                // 更新作品信息
+                painting.title = document.getElementById('paintingTitle').value;
+                painting.year = document.getElementById('paintingYear').value;
+                painting.description = document.getElementById('paintingDesc').value;
+                painting.details = [
+                    { label: "尺寸", value: document.getElementById('paintingSize').value },
+                    { label: "材质", value: document.getElementById('paintingMaterial').value },
+                    { label: "创作地点", value: painting.details.find(d => d.label === '创作地点').value }
+                ];
+                
+                // 如果上传了新图片，更新图片
+                const imageFile = document.getElementById('paintingImage').files[0];
+                if (imageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        painting.image = e.target.result;
+                        savePaintings();
+                        renderPaintings();
+                        updateStats();
+                        closeUploadPanel();
+                        alert('作品更新成功！');
+                    };
+                    reader.readAsDataURL(imageFile);
+                } else {
+                    savePaintings();
+                    renderPaintings();
+                    updateStats();
+                    closeUploadPanel();
+                    alert('作品更新成功！');
+                }
+            };
+        }
+        
+        // 删除作品
+        function deletePainting(id) {
+            if (confirm('确定要删除这幅作品吗？此操作不可撤销。')) {
+                paintings = paintings.filter(p => p.id !== id);
+                savePaintings();
+                renderPaintings();
+                updateStats();
+            }
+        }
+        
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePaintings();
+            loadArtistProfile();
+            loadBannerData();
+            
+            // 页面导航功能
+            const galleryLink = document.getElementById('galleryLink');
+            const aboutLink = document.getElementById('aboutLink');
+            const homeLink = document.getElementById('homeLink');
+            const galleryPage = document.getElementById('galleryPage');
+            const aboutPage = document.getElementById('aboutPage');
+            
+            function setActivePage(page) {
+                galleryPage.classList.remove('active');
+                aboutPage.classList.remove('active');
+                
+                galleryLink.classList.remove('active');
+                aboutLink.classList.remove('active');
+                
+                page.classList.add('active');
+                
+                if (page === galleryPage) {
+                    galleryLink.classList.add('active');
+                } else if (page === aboutPage) {
+                    aboutLink.classList.add('active');
+                }
+            }
+            
+            galleryLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                setActivePage(galleryPage);
+            });
+            
+            aboutLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                setActivePage(aboutPage);
+            });
+            
+            homeLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                setActivePage(galleryPage);
+            });
+            
+            // 上传面板功能
+            const openUploadBtn = document.getElementById('openUpload');
+            const uploadPanel = document.getElementById('uploadPanel');
+            const closeUploadBtn = document.getElementById('closeUpload');
+            const cancelUploadBtn = document.getElementById('cancelUpload');
+            const paintingForm = document.getElementById('paintingForm');
+            const paintingImage = document.getElementById('paintingImage');
+            const imagePreview = document.getElementById('imagePreview');
+            const rotateBtn = document.getElementById('rotateBtn');
+            
+            // 打开上传面板（新作品模式）
+            openUploadBtn.addEventListener('click', function() {
+                paintingForm.reset();
+                imagePreview.innerHTML = '<span>图片预览</span>';
+                document.getElementById('uploadPanel').classList.add('active');
+                
+                // 设置为新作品模式
+                paintingForm.onsubmit = function(e) {
+                    e.preventDefault();
+                    addNewPainting();
+                };
+            });
+            
+            // 关闭上传面板
+            function closeUploadPanel() {
+                uploadPanel.classList.remove('active');
+            }
+            
+            closeUploadBtn.addEventListener('click', closeUploadPanel);
+            cancelUploadBtn.addEventListener('click', closeUploadPanel);
+            
+            // 图片预览功能
+            paintingImage.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    
+                    reader.addEventListener('load', function() {
+                        imagePreview.innerHTML = `<img src="${this.result}" alt="预览">`;
+                    });
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // 简单的图片旋转功能
+            let rotation = 0;
+            rotateBtn.addEventListener('click', function() {
+                const img = imagePreview.querySelector('img');
+                if (img) {
+                    rotation += 90;
+                    if (rotation >= 360) rotation = 0;
+                    img.style.transform = `rotate(${rotation}deg)`;
+                }
+            });
+            
+            // 添加新作品
+            function addNewPainting() {
+                const title = document.getElementById('paintingTitle').value;
+                const year = document.getElementById('paintingYear').value;
+                const desc = document.getElementById('paintingDesc').value;
+                const size = document.getElementById('paintingSize').value;
+                const material = document.getElementById('paintingMaterial').value;
+                const imageFile = document.getElementById('paintingImage').files[0];
+                
+                if (!imageFile) {
+                    alert('请选择作品图片');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const newPainting = {
+                        id: paintings.length > 0 ? Math.max(...paintings.map(p => p.id)) + 1 : 1,
+                        title: title,
+                        year: year,
+                        image: e.target.result,
+                        description: desc,
+                        details: [
+                            { label: "尺寸", value: size },
+                            { label: "材质", value: material },
+                            { label: "创作地点", value: "工作室" }
+                        ]
+                    };
+                    
+                    paintings.push(newPainting);
+                    savePaintings();
+                    renderPaintings();
+                    updateStats();
+                    closeUploadPanel();
+                    alert('作品上传成功！');
+                };
+                
+                reader.readAsDataURL(imageFile);
+            }
+            
+            // 年份筛选功能
+            const yearButtons = document.querySelectorAll('.year-btn');
+            yearButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    yearButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const selectedYear = this.getAttribute('data-year');
+                    renderPaintings(selectedYear);
+                });
+            });
+            
+            // 横幅编辑功能
+            const editBannerBtn = document.getElementById('editBannerBtn');
+            const bannerEditPanel = document.getElementById('bannerEditPanel');
+            const closeBannerEdit = document.getElementById('closeBannerEdit');
+            const cancelBannerEdit = document.getElementById('cancelBannerEdit');
+            const bannerForm = document.getElementById('bannerForm');
+            const bannerImage = document.getElementById('bannerImage');
+            const bannerImagePreview = document.getElementById('bannerImagePreview');
+            
+            // 打开横幅编辑面板
+            editBannerBtn.addEventListener('click', function() {
+                // 填充当前横幅数据
+                document.getElementById('bannerTitleInput').value = bannerData.title;
+                document.getElementById('bannerSubtitleInput').value = bannerData.subtitle;
+                
+                // 显示当前横幅图片预览
+                bannerImagePreview.innerHTML = `<img src="${bannerData.image}" alt="横幅预览">`;
+                
+                // 打开面板
+                bannerEditPanel.classList.add('active');
+            });
+            
+            // 关闭横幅编辑面板
+            function closeBannerEditPanel() {
+                bannerEditPanel.classList.remove('active');
+            }
+            
+            closeBannerEdit.addEventListener('click', closeBannerEditPanel);
+            cancelBannerEdit.addEventListener('click', closeBannerEditPanel);
+            
+            // 横幅图片预览
+            bannerImage.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    
+                    reader.addEventListener('load', function() {
+                        bannerImagePreview.innerHTML = `<img src="${this.result}" alt="预览">`;
+                    });
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // 横幅表单提交
+            bannerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 更新横幅数据
+                bannerData.title = document.getElementById('bannerTitleInput').value;
+                bannerData.subtitle = document.getElementById('bannerSubtitleInput').value;
+                
+                // 如果上传了新图片，更新图片
+                const imageFile = document.getElementById('bannerImage').files[0];
+                if (imageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        bannerData.image = e.target.result;
+                        saveBannerData();
+                        updateBanner();
+                        closeBannerEditPanel();
+                        alert('横幅更新成功！');
+                    };
+                    reader.readAsDataURL(imageFile);
+                } else {
+                    saveBannerData();
+                    updateBanner();
+                    closeBannerEditPanel();
+                    alert('横幅更新成功！');
+                }
+            });
+            
+            // 艺术家资料编辑功能
+            const editProfileBtn = document.getElementById('editProfileBtn');
+            const profileEditPanel = document.getElementById('profileEditPanel');
+            const closeProfileEdit = document.getElementById('closeProfileEdit');
+            const cancelProfileEdit = document.getElementById('cancelProfileEdit');
+            const profileForm = document.getElementById('profileForm');
+            const artistImageInput = document.getElementById('artistImage');
+            const artistImagePreview = document.getElementById('artistImagePreview');
+            
+            // 打开艺术家资料编辑面板
+            editProfileBtn.addEventListener('click', function() {
+                // 填充当前艺术家资料
+                document.getElementById('artistNameInput').value = artistProfile.name;
+                document.getElementById('artistBioInput').value = artistProfile.bio;
+                document.getElementById('artistYearsInput').value = artistProfile.years;
+                document.getElementById('artistExhibitionsInput').value = artistProfile.exhibitions;
+                document.getElementById('artistStatementInput').value = artistProfile.statement;
+                
+                // 显示当前艺术家头像预览
+                artistImagePreview.innerHTML = `<img src="${artistProfile.portrait}" alt="艺术家头像预览">`;
+                
+                // 打开面板
+                profileEditPanel.classList.add('active');
+            });
+            
+            // 关闭艺术家资料编辑面板
+            function closeProfileEditPanel() {
+                profileEditPanel.classList.remove('active');
+            }
+            
+            closeProfileEdit.addEventListener('click', closeProfileEditPanel);
+            cancelProfileEdit.addEventListener('click', closeProfileEditPanel);
+            
+            // 艺术家头像预览
+            artistImageInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    
+                    reader.addEventListener('load', function() {
+                        artistImagePreview.innerHTML = `<img src="${this.result}" alt="预览">`;
+                    });
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // 艺术家资料表单提交
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 更新艺术家资料
+                artistProfile.name = document.getElementById('artistNameInput').value;
+                artistProfile.bio = document.getElementById('artistBioInput').value;
+                artistProfile.years = document.getElementById('artistYearsInput').value;
+                artistProfile.exhibitions = document.getElementById('artistExhibitionsInput').value;
+                artistProfile.statement = document.getElementById('artistStatementInput').value;
+                
+                // 如果上传了新头像，更新头像
+                const imageFile = document.getElementById('artistImage').files[0];
+                if (imageFile) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        artistProfile.portrait = e.target.result;
+                        saveArtistProfile();
+                        updateArtistProfile();
+                        closeProfileEditPanel();
+                        alert('艺术家资料更新成功！');
+                    };
+                    reader.readAsDataURL(imageFile);
+                } else {
+                    saveArtistProfile();
+                    updateArtistProfile();
+                    closeProfileEditPanel();
+                    alert('艺术家资料更新成功！');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
